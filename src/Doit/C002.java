@@ -27,8 +27,8 @@ public class C002 {
 	 * @슈도코드
 	 */
 	/**
-	 * @결과
-	 * @시간
+	 * @결과 성공
+	 * @시간 248
 	 */
 	public static void main(String[] args) {
 		java.util.Scanner sc = new java.util.Scanner(System.in);
