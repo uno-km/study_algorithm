@@ -34,12 +34,14 @@ public class C004 {
 	 *     함정은 (1,1),(1,3) 이렇게 좌표가 온다면 큐션과같은 0이 필요하니 D배열을 선언할땐 길이를 A보다 +1씩 해줘야한다!
 	 */
 	/**
-	 * @슈도코드작성하기
+	 * @슈도코드작성하기 N(배열크기-입력값)M(질의 수-입력값) for(N만큼 반복){for(N만큼 반복) 원본 A배열 저장하기, 구간합배열
+	 *           D저장하기 } for(M만큼 반복){질의 계싼 및 출력하기 }
 	 * @슈도코드
 	 */
 	/**
-	 * @결과
-	 * @시간
+	 * @결과 정답1/중간중간 너무 잔실수가많았고 식을 틀렸다기보다는 -1을 놓치거나 코드에서 빼먹거나 등등이 너무잦아서 코딩이후에 테스트단계에서
+	 *     오래걸림;;
+	 * @시간 1784
 	 */
 
 	public static void main(String[] args) {
@@ -49,21 +51,26 @@ public class C004 {
 			java.util.StringTokenizer st = new java.util.StringTokenizer(bf.readLine());
 			// TODO
 			int N = Integer.parseInt(st.nextToken());
-			int oc = Integer.parseInt(st.nextToken());
-			long[] sumArr = new long[(N * N) + 1];
-			for (int yIdx = 0; yIdx < N; yIdx++) {
-				java.util.StringTokenizer yLine = new java.util.StringTokenizer(bf.readLine());
-				for (int xIdx = 0; xIdx < N; xIdx++) {
-					sumArr[(yIdx * 4) + xIdx + 1] = sumArr[(yIdx * 4) + xIdx] + Integer.parseInt(yLine.nextToken());
+			int M = Integer.parseInt(st.nextToken());
+			long[][] originArr = new long[N + 1][N + 1];
+			long[][] sumArr = new long[N + 1][N + 1];
+			for (int x = 1; x <= N; x++) {
+				java.util.StringTokenizer input = new java.util.StringTokenizer(bf.readLine());
+				for (int y = 1; y <= N; y++) {
+					originArr[x][y] = Long.parseLong(input.nextToken());
+					// (X-1,Y)+(X,Y-1)+겹치는영역(X-1,Y-1)+X,Y
+					sumArr[x][y] = sumArr[x - 1][y] + sumArr[x][y - 1] - sumArr[x - 1][y - 1] + originArr[x][y];
 				}
 			}
-			for (int i = 0; i < oc; i++) {
+			for (int i = 0; i < M; i++) {
 				java.util.StringTokenizer sumSt = new java.util.StringTokenizer(bf.readLine());
 				int x_ = Integer.parseInt(sumSt.nextToken());
 				int y_ = Integer.parseInt(sumSt.nextToken());
 				int xX = Integer.parseInt(sumSt.nextToken());
 				int yY = Integer.parseInt(sumSt.nextToken());
-				System.out.println(sumArr[(N * (yY - 1) + xX)] - sumArr[(N * (y_ - 1) + x_ + 1)]);
+				// 구간합(X`,Y`) - 구간합(X-1,Y`) - 구간합(X`,Y-1) + 구간합 (X-1,Y-1)
+				long xy = sumArr[xX][yY] - sumArr[x_ - 1][yY] - sumArr[xX][y_ - 1] + sumArr[x_ - 1][y_ - 1];
+				System.out.println(xy);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
