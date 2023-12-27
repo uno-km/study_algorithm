@@ -33,16 +33,22 @@ public class C005 {
 			java.util.StringTokenizer st = new java.util.StringTokenizer(bf.readLine());
 			java.util.StringTokenizer numinput = new java.util.StringTokenizer(bf.readLine());
 			// TODO
-			long n = Long.parseLong(st.nextToken());
-			long m = Long.parseLong(st.nextToken());
-			long c = 0;
-			long[] numArr = new long[(int) (n + 1)];
-			long[] sumArr = new long[(int) (n + 1)];
-			for(long i = 1;i<=n;i++)
-			{
-				long x = Long.parseLong(numinput.nextToken());
-				
+			int n = Integer.parseInt(st.nextToken());
+			int m = Integer.parseInt(st.nextToken());
+			int c = 0;
+			long[] numArr = new long[n + 1];
+			long[] sumArr = new long[n + 1];
+			for (int i = 1; i <= n; i++) {
+				int x = Integer.parseInt(numinput.nextToken());
+				numArr[i] = x;
+				sumArr[i] = sumArr[i - 1] + x;
+				for (int j = 1; j < i; j++) {
+					if ((sumArr[i] - sumArr[j]) % m == 0) {
+						c++;
+					}
+				}
 			}
+			System.out.println(c);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
