@@ -1,5 +1,7 @@
 package Doit;
 
+import java.util.Scanner;
+
 public class C005 {
 	/**
 	 * @author 김은호
@@ -32,11 +34,15 @@ public class C005 {
 	 *     배열의 개수를 셉니다. 변경된 합 배열에서 원소 값이 같은 2개의 원소를 뽑는 모든 경우의 수를 구하여 정답에 더하면 됩니다. 위의
 	 *     예에서 0이 3개, 1이 2개이므로, 3C2, 2C2 로 경우의 수를 구하여 더하면 됩니다. 이때 경우의 수를 구하는 식인
 	 *     C(콤비네이션)을 쓰게되면 3C2 = 3*2/2*1이렇게된다.따라서 약분되어 3이 나온다. 그리고 그변경된 합배열 2c2의 경우의
-	 *     수는 2*1/2*1=1이므로 애초에 0이었을때 3개 + 3c2 일때 3 + 2c2 일때 1개 해서 총 7개가 나온것이다.
+	 *     수는 2*1/2*1=1이므로 애초에 0이었을때 3개 + 3c2 일때 3 + 2c2 일때 1개 해서 총 7개가 나온것이다. 
+	 *     수열 식 : n! / (r!(n-r)!
 	 */
 	/**
 	 * @슈도코드작성하기
-	 * @슈도코드
+	 * @슈도코드 n 입력받기(수열의 개수) m입력받기(나누어떨어져야 하는 수), a입력받기(원본 수열 저장 리스트),
+	 *       sumArr선언하기(합배열), c선언하기 (같은 나미저의 인덱스를 카운트하는 리스트), answer 선언하기(정답 변수) for
+	 *       (i~n-1) s[i] = s[i-1] + a[i] //합배열 저장 for( 0~n-1) r = s[i]%m if(r==0)
+	 *       c[r] = ++c[r] for (0~m-1) c[i]
 	 */
 	/**
 	 * @결과 1차. 시간초과
@@ -44,30 +50,30 @@ public class C005 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		try {
-			java.io.BufferedReader bf = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-			java.util.StringTokenizer st = new java.util.StringTokenizer(bf.readLine());
-			java.util.StringTokenizer numinput = new java.util.StringTokenizer(bf.readLine());
-			// TODO
-			int n = Integer.parseInt(st.nextToken());
-			int m = Integer.parseInt(st.nextToken());
-			int c = 0;
-			long[] numArr = new long[n + 1];
-			long[] sumArr = new long[n + 1];
-			for (int i = 1; i <= n; i++) {
-				int x = Integer.parseInt(numinput.nextToken());
-				numArr[i] = x;
-				sumArr[i] = sumArr[i - 1] + x;
-				for (int j = 0; j < i; j++) {
-					if ((sumArr[i] - sumArr[j]) % m == 0) {
-						c++;
-					}
-				}
-			}
-			System.out.println(c);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
+		java.util.Scanner sc = new java.util.Scanner(System.in);
+		// TODO
+		int n = sc.nextInt();
+		int m = sc.nextInt();
+		long[] sumArr = new long[n];
+		long[] idxArr = new long[m];
+		int answer = 0;
+		sumArr[0] = sc.nextInt();
+		for (int i = 1; i < n; i++) {
+			sumArr[i] = sumArr[i - 1] + sc.nextInt();
 		}
+		for (int i = 0; i < n; i++) {
+			int r = (int) (sumArr[i] % m);
+			if (r == 0) {
+				answer++;
+			}
+			idxArr[r]++;
+		}
+		for (int i = 0; i < m; i++) {
+			if (idxArr[i] > 1) {
+				answer = (int) (answer + (idxArr[i] * (idxArr[i] - 1) / 2));
+			}
+		}
+		System.out.println(answer);
+		sc.close();
 	}
 }
