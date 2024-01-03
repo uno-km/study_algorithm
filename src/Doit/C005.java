@@ -34,8 +34,8 @@ public class C005 {
 	 *     배열의 개수를 셉니다. 변경된 합 배열에서 원소 값이 같은 2개의 원소를 뽑는 모든 경우의 수를 구하여 정답에 더하면 됩니다. 위의
 	 *     예에서 0이 3개, 1이 2개이므로, 3C2, 2C2 로 경우의 수를 구하여 더하면 됩니다. 이때 경우의 수를 구하는 식인
 	 *     C(콤비네이션)을 쓰게되면 3C2 = 3*2/2*1이렇게된다.따라서 약분되어 3이 나온다. 그리고 그변경된 합배열 2c2의 경우의
-	 *     수는 2*1/2*1=1이므로 애초에 0이었을때 3개 + 3c2 일때 3 + 2c2 일때 1개 해서 총 7개가 나온것이다. 
-	 *     수열 식 : n! / (r!(n-r)!
+	 *     수는 2*1/2*1=1이므로 애초에 0이었을때 3개 + 3c2 일때 3 + 2c2 일때 1개 해서 총 7개가 나온것이다. 수열 식
+	 *     : n! / (r!(n-r)!
 	 */
 	/**
 	 * @슈도코드작성하기
@@ -46,7 +46,8 @@ public class C005 {
 	 */
 	/**
 	 * @결과 1차. 시간초과
-	 * @시간
+	 * @결과 2차. int로 해서 틀림 앞으로 long으로 주로쓰자...
+	 * @시간 1860
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -56,7 +57,7 @@ public class C005 {
 		int m = sc.nextInt();
 		long[] sumArr = new long[n];
 		long[] idxArr = new long[m];
-		int answer = 0;
+		long answer = 0;
 		sumArr[0] = sc.nextInt();
 		for (int i = 1; i < n; i++) {
 			sumArr[i] = sumArr[i - 1] + sc.nextInt();
@@ -70,7 +71,7 @@ public class C005 {
 		}
 		for (int i = 0; i < m; i++) {
 			if (idxArr[i] > 1) {
-				answer = (int) (answer + (idxArr[i] * (idxArr[i] - 1) / 2));
+				answer += (idxArr[i] * (idxArr[i] - 1) / 2);
 			}
 		}
 		System.out.println(answer);
