@@ -1,7 +1,5 @@
 package Doit;
 
-import java.util.Scanner;
-
 public class C005 {
 	/**
 	 * @author 김은호
