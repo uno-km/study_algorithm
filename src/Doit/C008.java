@@ -1,5 +1,7 @@
 package Doit;
 
+import java.util.Arrays;
+
 public class C008 {
 	/**
 	 * @author 김은호
@@ -39,16 +41,78 @@ public class C008 {
 	 * 
 	 *     그리고 위의 단계를 배여르이 모든 수에 대하여 반복해 줄 수 있도록 한다. 즉 계속 비교하고있는 값인 K가 N이 될떄까지 반복하며
 	 *     좋은 수가 몇개인지 찾는다.
+	 * 
+	 *     추가로 이게 투포인트네 라고 했을떄 감이 안잡힐 수 있는데 , 여기서 "두 수" 라는 것을 명심하면 투포인터라는게 떠올라야한다.
 	 */
 	/**
-	 * @슈도코드작성하기 
-	 * @슈도코드
+	 * @슈도코드작성하기
+	 * @슈도코드 수의 개수 입력값 N, 배열저장 A, 좋은수개수 cnt
+	 *
+	 *       N을 입력
+	 * 
+	 *       N개의 수를 입력받은 뒤 배열 A에 저장
+	 * 
+	 *       배열 A.오름차순정렬
+	 * 
+	 *       for(i, i>A.len, i++) {
+	 * 
+	 *       r = 0, l = len-1 , U= A[i]
+	 * 
+	 *       #투포인토로직 while((r!=l) || (r<=l) ){
+	 * 
+	 * 
+	 *       S=A[r] + A[l]
+	 * 
+	 *       (S > U) => --l
+	 * 
+	 *       (S < U) => ++r
+	 * 
+	 *       (S == U) => ++cnt ++r --l }
+	 * 
+	 *       }
+	 * 
+	 *       print cnt
 	 */
 	/**
 	 * @결과
 	 * @시간
 	 */
 	public static void main(String[] args) {
-
+		try {
+			java.io.BufferedReader bf = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+			// TODO
+			int N = Integer.valueOf(bf.readLine());
+			long cnt = 0;
+			long A[] = new long[N];
+			java.util.StringTokenizer st = new java.util.StringTokenizer(bf.readLine());
+			for (int i = 0; i < A.length; i++) {
+				if (st.hasMoreTokens()) {
+					A[i] = Long.parseLong(st.nextToken());
+				} else {
+					throw new Exception("입력개수와 입력값의 길이가 맞지않습니다.");
+				}
+			}
+			Arrays.sort(A);
+			for (int i = 0; i < A.length; i++) {
+				int R = 0;
+				int L = A.length - 1;
+				long U = A[i];
+				while (R < L) {
+					long S = A[R] + A[L];
+					if (S > U) {
+						--L;
+					} else if (S < U) {
+						++R;
+					} else {
+						cnt++;
+						break;
+					}
+				}
+			}
+			System.out.println(cnt);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.print(e.getMessage());
+		}
 	}
 }
