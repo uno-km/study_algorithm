@@ -1,7 +1,5 @@
 package Doit;
 
-import java.util.Arrays;
-
 public class C008 {
 	/**
 	 * @author 김은호
@@ -74,7 +72,9 @@ public class C008 {
 	 *       print cnt
 	 */
 	/**
-	 * @결과
+	 * @결과 처음에 "좋은수" 로 지정된 숫자에 대한 예외 처리를 안해서 틀렸고, 그 예외처리를 대강해서 틀렸고, 예외처리를 할때 좌우 포인터를
+	 *     움직인게 아니여서 틀렸었고, 마지막엔 왼쪽 포인터를 이동시켜야하는데 i를 줄여서 계속 틀렸음
+	 * 
 	 * @시간
 	 */
 	public static void main(String[] args) {
@@ -82,30 +82,32 @@ public class C008 {
 			java.io.BufferedReader bf = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 			// TODO
 			int N = Integer.valueOf(bf.readLine());
-			long cnt = 0;
-			long A[] = new long[N];
+			int cnt = 0;
+			int A[] = new int[N];
 			java.util.StringTokenizer st = new java.util.StringTokenizer(bf.readLine());
 			for (int i = 0; i < A.length; i++) {
-				if (st.hasMoreTokens()) {
-					A[i] = Long.parseLong(st.nextToken());
-				} else {
-					throw new Exception("입력개수와 입력값의 길이가 맞지않습니다.");
-				}
+				A[i] = Integer.parseInt(st.nextToken());
 			}
-			Arrays.sort(A);
+			java.util.Arrays.sort(A);
 			for (int i = 0; i < A.length; i++) {
 				int R = 0;
 				int L = A.length - 1;
-				long U = A[i];
+				int U = A[i];
 				while (R < L) {
-					long S = A[R] + A[L];
+					int S = A[R] + A[L];
 					if (S > U) {
 						--L;
 					} else if (S < U) {
 						++R;
 					} else {
-						cnt++;
-						break;
+						if (R != i && L != i) {
+							cnt++;
+							break;
+						} else if (R == i) {
+							++R;
+						} else if (L == i) {
+							--L;
+						}
 					}
 				}
 			}
