@@ -82,7 +82,57 @@ public class C009 {
 	 * @결과
 	 * @시간
 	 */
-	public static void main(String[] args) {
+	public static void checkValidation(boolean condition, String errorMsg) {
+		if (condition)
+			throw new RuntimeException(errorMsg);
+	}
 
+//	condition
+	final static java.util.List<Character> DNA_CHAR_STAND_ARR = java.util.Arrays.asList('A', 'C', 'G', 'T');
+
+	public static void main(String[] args) {
+		try {
+			java.io.BufferedReader bf = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+			// TODO
+			java.util.StringTokenizer dnaWindowLenStrTokenizer = new java.util.StringTokenizer(bf.readLine());
+			int dnaLength = Integer.valueOf(dnaWindowLenStrTokenizer.nextToken());
+			int windowLensLength = Integer.valueOf(dnaWindowLenStrTokenizer.nextToken());
+			char[] dnaCharArr = setDnaCharArr(bf);
+			checkValidation(dnaCharArr.length != dnaLength, "길이가 맞지않음");
+			java.util.HashMap<Character, Integer> pwdStandardFrame = setPwdStandardFrame(bf);
+			java.util.HashMap<Character, Integer> defaultWindowLens = setDefaultWindowLensArray(dnaCharArr);
+			System.out.println();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+			System.err.println(e.getMessage());
+		}
+	}
+
+	private static char[] setDnaCharArr(java.io.BufferedReader bf) throws java.io.IOException {
+		java.util.StringTokenizer dnaStrTokenizer = new java.util.StringTokenizer(bf.readLine());
+		return dnaStrTokenizer.nextToken().toCharArray();
+	}
+
+	private static java.util.HashMap<Character, Integer> setPwdStandardFrame(java.io.BufferedReader bf)
+			throws java.io.IOException {
+		java.util.HashMap<Character, Integer> pwdStandardFrame = new java.util.HashMap<>();
+		java.util.StringTokenizer pwdConditionsStrTokenizer = new java.util.StringTokenizer(bf.readLine());
+		for (final Character DNA_CHAR : DNA_CHAR_STAND_ARR) {
+			pwdStandardFrame.put(DNA_CHAR, Integer.parseInt(pwdConditionsStrTokenizer.nextToken()));
+		}
+		return pwdStandardFrame;
+	}
+
+	private static java.util.HashMap<Character, Integer> setDefaultWindowLensArray(char[] dnaCharArr) {
+		java.util.HashMap<Character, Integer> defaultWindowLens = new java.util.HashMap<>();
+		java.util.Arrays.sort(dnaCharArr);
+		String dnaStr = new String(dnaCharArr);
+		for (final Character DNA_CHAR : DNA_CHAR_STAND_ARR) {
+			int beforeStrLength = dnaStr.length();
+			dnaStr = dnaStr.replaceAll(String.valueOf(DNA_CHAR), "");
+			defaultWindowLens.put(DNA_CHAR, beforeStrLength - dnaStr.length());
+		}
+		return defaultWindowLens;
 	}
 }
